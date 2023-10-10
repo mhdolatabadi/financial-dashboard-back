@@ -1,6 +1,6 @@
 export enum UnitEnum {
-  Euro,
-  Dollar,
-  Rial,
-  Derham,
+  Euro = 'euro',
+  Dollar = 'dollar',
+  Rial = 'rial',
+  Derham = 'derham',
 }

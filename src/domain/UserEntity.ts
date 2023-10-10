@@ -1,11 +1,12 @@
-import { Column, PrimaryColumn } from 'typeorm';
+import { Column, Entity, PrimaryColumn } from 'typeorm';
 import { UnitEnum } from './UnitEnum';
 
+@Entity('user')
 export class UserEntity {
   @PrimaryColumn({ type: 'uuid' })
   id: string;
 
-  @Column({ type: 'varchar', length: 20 })
+  @Column({ type: 'varchar', length: 20, unique: true })
   username: string;
 
   @Column({ type: 'varchar', length: 20 })
@@ -31,6 +32,9 @@ export class UserEntity {
   })
   unit: string;
 
-  @Column({ type: 'float' })
+  @Column({ type: 'float', nullable: true })
   totalProfit: number;
+
+  @Column({ default: false })
+  isAdmin: boolean;
 }

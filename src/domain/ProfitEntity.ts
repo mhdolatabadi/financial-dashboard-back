@@ -1,5 +1,6 @@
-import { Column, PrimaryColumn } from 'typeorm';
+import { Column, ManyToOne, PrimaryColumn } from 'typeorm';
 import { UnitEnum } from './UnitEnum';
+import { UserEntity } from './UserEntity';
 
 export class ProfitEntity {
   @PrimaryColumn()
@@ -21,4 +22,7 @@ export class ProfitEntity {
 
   @Column({ type: 'text', nullable: true })
   description: string;
+
+  @ManyToOne(() => UserEntity)
+  user: UserEntity;
 }

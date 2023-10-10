@@ -1,7 +1,9 @@
-import { Column, PrimaryColumn } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from 'typeorm';
 import { TransactionTypeEnum } from './TransactionTypeEnum';
 import { UnitEnum } from './UnitEnum';
+import { UserEntity } from './UserEntity';
 
+@Entity('transaction')
 export class TransactionEntity {
   @PrimaryColumn({ type: 'uuid' })
   id: string;
@@ -25,4 +27,11 @@ export class TransactionEntity {
 
   @Column({ type: 'text' })
   description: string;
+
+  @ManyToOne(() => UserEntity)
+  @JoinColumn({ name: 'user_id' })
+  user: UserEntity;
+
+  @Column()
+  userId: string;
 }
