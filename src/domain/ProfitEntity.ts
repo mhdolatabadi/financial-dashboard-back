@@ -1,7 +1,8 @@
-import { Column, ManyToOne, PrimaryColumn } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from 'typeorm';
 import { UnitEnum } from './UnitEnum';
 import { UserEntity } from './UserEntity';
 
+@Entity('profit')
 export class ProfitEntity {
   @PrimaryColumn()
   id: string;
@@ -24,5 +25,9 @@ export class ProfitEntity {
   description: string;
 
   @ManyToOne(() => UserEntity)
+  @JoinColumn({ name: 'user_id' })
   user: UserEntity;
+
+  @Column()
+  userId: string;
 }

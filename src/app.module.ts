@@ -9,6 +9,7 @@ import { ProfitEntity } from './domain/ProfitEntity';
 import { UserEntity } from './domain/UserEntity';
 import { TransactionEntity } from './domain/TransactionEntity';
 import { TransactionController } from './transaction/transaction.controller';
+import { ProfitController } from './profit/profit.controller';
 
 @Module({
   imports: [
@@ -26,7 +27,7 @@ import { TransactionController } from './transaction/transaction.controller';
     }),
     TypeOrmModule.forFeature([UserEntity, TransactionEntity, ProfitEntity]),
   ],
-  controllers: [UserController, TransactionController],
+  controllers: [UserController, TransactionController, ProfitController],
   providers: [UserService, TransactionService, ProfitService],
 })
 export class AppModule {}
