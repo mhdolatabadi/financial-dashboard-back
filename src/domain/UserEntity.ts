@@ -9,7 +9,7 @@ export class UserEntity {
   @Column({ type: 'varchar', length: 20, unique: true })
   username: string;
 
-  @Column({ type: 'varchar', length: 20 })
+  @Column({ type: 'text' })
   password: string;
 
   @Column({ type: 'varchar', length: 20, nullable: true })

@@ -13,12 +13,12 @@ export class UserController {
 
   @Get(':id')
   getUser(@Param('id') id: string) {
-    return this.userService.getUser(id);
+    return this.userService.getUserById(id);
   }
 
   @Get()
   getAllUsers() {
-    return this.userService.getUsers();
+    return this.userService.getAllUsers();
   }
 
   @Put(':id')
