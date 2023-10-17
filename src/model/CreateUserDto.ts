@@ -16,10 +16,10 @@ export class EditUserDto {
   password: string;
 
   @IsString()
-  firstName: string;
+  firstname: string;
 
   @IsString()
-  lastName: string;
+  lastname: string;
 
   @IsString()
   nationalNo: number;

@@ -9,12 +9,15 @@ import { CreateUserDto, EditUserDto } from 'src/model/CreateUserDto';
 import { Repository } from 'typeorm';
 import { v4 } from 'uuid';
 import * as bcrypt from 'bcrypt';
+import { TransactionEntity } from 'src/domain/TransactionEntity';
 
 @Injectable()
 export class UserService {
   constructor(
     @InjectRepository(UserEntity)
     private userRepository: Repository<UserEntity>,
+    @InjectRepository(TransactionEntity)
+    private transactionRepository: Repository<TransactionEntity>,
   ) {}
 
   async createUser(createDto: CreateUserDto) {
@@ -34,8 +37,17 @@ export class UserService {
     return id;
   }
 
-  getUserById(id: string) {
-    return this.userRepository.findOne({ where: { id } });
+  async getUserById(id: string) {
+    const user = await this.userRepository.findOne({ where: { id } });
+    const transactionDateEntity = await this.transactionRepository.findOne({
+      where: { userId: id },
+      select: { date: true },
+      order: { date: 'DESC' },
+    });
+    const lastTransactionDate = transactionDateEntity
+      ? transactionDateEntity.date
+      : undefined;
+    return { ...user, lastTransactionDate };
   }
 
   getUserByUsername(username: string) {

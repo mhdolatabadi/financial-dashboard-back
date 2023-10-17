@@ -1,11 +1,11 @@
-import { IsNumber, IsString } from 'class-validator';
+import { IsDateString, IsNumber, IsString } from 'class-validator';
 
 export class SubmitProfitDto {
   @IsString()
   username: string;
 
-  @IsNumber()
-  date: number;
+  @IsDateString()
+  date: Date;
 
   @IsNumber()
   amount: number;

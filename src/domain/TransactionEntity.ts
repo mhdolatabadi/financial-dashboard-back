@@ -1,4 +1,11 @@
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from 'typeorm';
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryColumn,
+} from 'typeorm';
 import { TransactionTypeEnum } from './TransactionTypeEnum';
 import { UnitEnum } from './UnitEnum';
 import { UserEntity } from './UserEntity';
@@ -9,7 +16,7 @@ export class TransactionEntity {
   id: string;
 
   @Column({ type: 'timestamp' })
-  date: number;
+  date: Date;
 
   @Column({ type: 'enum', enum: TransactionTypeEnum, enumName: 'type' })
   type: string;

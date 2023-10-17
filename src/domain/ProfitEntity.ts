@@ -8,7 +8,7 @@ export class ProfitEntity {
   id: string;
 
   @Column({ type: 'timestamp' })
-  date: number;
+  date: Date;
 
   @Column({ type: 'integer', default: 0 })
   amount: number;

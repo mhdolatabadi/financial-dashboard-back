@@ -16,6 +16,11 @@ export class UserController {
     return this.userService.getUserById(id);
   }
 
+  @Get('username/:username')
+  getUserByUsername(@Param('username') username: string) {
+    return this.userService.getUserByUsername(username);
+  }
+
   @Get()
   getAllUsers() {
     return this.userService.getAllUsers();
