@@ -1,28 +1,28 @@
-import { Column, Entity, PrimaryColumn } from 'typeorm';
-import { UnitEnum } from './UnitEnum';
+import { Column, Entity, PrimaryColumn } from 'typeorm'
+import { UnitEnum } from './UnitEnum'
 
 @Entity('user')
 export class UserEntity {
   @PrimaryColumn({ type: 'uuid' })
-  id: string;
+  id: string
 
   @Column({ type: 'varchar', length: 20, unique: true })
-  username: string;
+  username: string
 
   @Column({ type: 'text' })
-  password: string;
+  password: string
 
   @Column({ type: 'varchar', length: 20, nullable: true })
-  firstName: string;
+  firstName: string
 
   @Column({ type: 'varchar', length: 20, nullable: true })
-  lastName: string;
+  lastName: string
 
   @Column({ type: 'char', length: 10, nullable: true })
-  nationalNo: number;
+  nationalNo: number
 
   @Column({ type: 'float', nullable: true })
-  financial: number;
+  financial: number
 
   @Column({
     type: 'enum',
@@ -30,11 +30,11 @@ export class UserEntity {
     enumName: 'unit_enum',
     default: UnitEnum.Rial,
   })
-  unit: string;
+  unit: string
 
   @Column({ type: 'float', nullable: true })
-  totalProfit: number;
+  totalProfit: number
 
   @Column({ default: false })
-  isAdmin: boolean;
+  isAdmin: boolean
 }

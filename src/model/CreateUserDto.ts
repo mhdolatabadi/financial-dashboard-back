@@ -1,35 +1,35 @@
-import { IsString } from 'class-validator';
+import { IsString } from 'class-validator'
 
 export class CreateUserDto {
   @IsString()
-  username: string;
+  username: string
 
   @IsString()
-  password: string;
+  password: string
 }
 
 export class EditUserDto {
   @IsString()
-  username: string;
+  username: string
 
   @IsString()
-  password: string;
+  password: string
 
   @IsString()
-  firstname: string;
+  firstname: string
 
   @IsString()
-  lastname: string;
+  lastname: string
 
   @IsString()
-  nationalNo: number;
+  nationalNo: number
 
   @IsString()
-  financial: number;
+  financial: number
 
   @IsString()
-  unit: string;
+  unit: string
 
   @IsString()
-  totalProfit: number;
+  totalProfit: number
 }

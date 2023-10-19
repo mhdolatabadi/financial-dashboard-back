@@ -1,17 +1,17 @@
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from 'typeorm';
-import { UnitEnum } from './UnitEnum';
-import { UserEntity } from './UserEntity';
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from 'typeorm'
+import { UnitEnum } from './UnitEnum'
+import { UserEntity } from './UserEntity'
 
 @Entity('profit')
 export class ProfitEntity {
   @PrimaryColumn()
-  id: string;
+  id: string
 
   @Column({ type: 'timestamp' })
-  date: Date;
+  date: Date
 
   @Column({ type: 'integer', default: 0 })
-  amount: number;
+  amount: number
 
   @Column({
     type: 'enum',
@@ -19,15 +19,15 @@ export class ProfitEntity {
     enumName: 'unit_enum',
     default: UnitEnum.Rial,
   })
-  unit: string;
+  unit: string
 
   @Column({ type: 'text', nullable: true })
-  description: string;
+  description: string
 
   @ManyToOne(() => UserEntity)
   @JoinColumn({ name: 'user_id' })
-  user: UserEntity;
+  user: UserEntity
 
   @Column()
-  userId: string;
+  userId: string
 }

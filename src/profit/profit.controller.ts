@@ -1,6 +1,6 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
-import { ProfitService } from './profit.service';
-import { SubmitProfitDto } from 'src/model/SubmitProfitDto';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common'
+import { ProfitService } from './profit.service'
+import { SubmitProfitDto } from 'src/model/SubmitProfitDto'
 
 @Controller('profit')
 export class ProfitController {
@@ -8,11 +8,11 @@ export class ProfitController {
 
   @Post()
   createTransaction(@Body() profit: SubmitProfitDto) {
-    return this.profitService.submitProfit(profit);
+    return this.profitService.submitProfit(profit)
   }
 
   @Get(':id')
   getAllTransactions(@Param('id') id: string) {
-    return this.profitService.getProfits(id);
+    return this.profitService.getProfits(id)
   }
 }
