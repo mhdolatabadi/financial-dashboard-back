@@ -55,7 +55,9 @@ export class UserService {
   }
 
   getAllUsers() {
-    return this.userRepository.find({ select: { id: true, username: true } })
+    return this.userRepository.find({
+      select: { id: true, username: true, firstname: true, lastname: true },
+    })
   }
 
   async updateUser(id: string, createDto: Partial<EditUserDto>) {

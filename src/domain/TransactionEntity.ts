@@ -32,7 +32,7 @@ export class TransactionEntity {
   })
   unit: string
 
-  @Column({ type: 'text' })
+  @Column({ type: 'text', nullable: true })
   description: string
 
   @ManyToOne(() => UserEntity)

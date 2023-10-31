@@ -1,4 +1,4 @@
-import { IsDateString, IsNumber, IsString } from 'class-validator'
+import { IsDateString, IsNumber, IsOptional, IsString } from 'class-validator'
 
 export class SubmitTransactionDto {
   @IsString()
@@ -16,6 +16,7 @@ export class SubmitTransactionDto {
   @IsString()
   unit: string
 
+  @IsOptional()
   @IsString()
   description: string
 }
