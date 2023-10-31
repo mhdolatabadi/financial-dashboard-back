@@ -13,12 +13,12 @@ export class UserEntity {
   password: string
 
   @Column({ type: 'varchar', length: 20, nullable: true })
-  firstName: string
+  firstname: string
 
   @Column({ type: 'varchar', length: 20, nullable: true })
-  lastName: string
+  lastname: string
 
-  @Column({ type: 'char', length: 10, nullable: true })
+  @Column({ type: 'char', length: 10, nullable: true, name: 'national_no' })
   nationalNo: number
 
   @Column({ type: 'float', nullable: true })
@@ -32,9 +32,9 @@ export class UserEntity {
   })
   unit: string
 
-  @Column({ type: 'float', nullable: true })
+  @Column({ type: 'float', nullable: true, name: 'total_profit' })
   totalProfit: number
 
-  @Column({ default: false })
+  @Column({ default: false, name: 'is_admin' })
   isAdmin: boolean
 }
