@@ -50,8 +50,17 @@ export class UserService {
     return { ...user, lastTransactionDate }
   }
 
-  getUserByUsername(username: string) {
-    return this.userRepository.findOne({ where: { username } })
+  async getUserByUsername(username: string) {
+    const user = await this.userRepository.findOne({ where: { username } })
+    const transactionDateEntity = await this.transactionRepository.findOne({
+      where: { userId: user.id },
+      select: { date: true },
+      order: { date: 'DESC' },
+    })
+    const lastTransactionDate = transactionDateEntity
+      ? transactionDateEntity.date
+      : undefined
+    return { ...user, lastTransactionDate }
   }
 
   getAllUsers() {
