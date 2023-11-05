@@ -71,10 +71,15 @@ export class UserService {
 
   async updateUser(id: string, createDto: Partial<EditUserDto>) {
     const user = await this.getUserById(id)
+    const saltRounds = 10
+    const hash = await bcrypt.hash(createDto.password, saltRounds)
     if (!user) {
       throw new NotFoundException()
     }
-    return this.userRepository.update(id, createDto)
+    return this.userRepository.update(id, {
+      ...createDto,
+      password: createDto.password ? hash : undefined,
+    })
   }
 
   async deleteUser(id: string) {
