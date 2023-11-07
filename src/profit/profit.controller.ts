@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common'
+import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common'
 import { ProfitService } from './profit.service'
 import { SubmitProfitDto } from 'src/model/SubmitProfitDto'
 
@@ -14,5 +14,10 @@ export class ProfitController {
   @Get(':id')
   getAllTransactions(@Param('id') id: string) {
     return this.profitService.getProfits(id)
+  }
+
+  @Delete(':id')
+  deleteProfit(@Param('id') id: string) {
+    return this.profitService.deleteProfit(id)
   }
 }

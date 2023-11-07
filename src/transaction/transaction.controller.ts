@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common'
+import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common'
 import { TransactionService } from './transaction.service'
 import { SubmitTransactionDto } from 'src/model/SubmitTransactionDto'
 
@@ -14,5 +14,10 @@ export class TransactionController {
   @Get(':id')
   getAllTransactions(@Param('id') id: string) {
     return this.transactinService.getTransactions(id)
+  }
+
+  @Delete(':id')
+  deleteTransaction(@Param('id') id: string) {
+    return this.transactinService.deleteTransaction(id)
   }
 }

@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common'
+import { Injectable, NotFoundException } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { ProfitEntity } from 'src/domain/ProfitEntity'
 import { UserEntity } from 'src/domain/UserEntity'
@@ -34,5 +34,11 @@ export class ProfitService {
 
   getProfits(userId: string) {
     return this.profitRepository.find({ where: { userId } })
+  }
+
+  async deleteProfit(id: string) {
+    const profit = await this.profitRepository.findOne({ where: { id } })
+    if (!profit) throw new NotFoundException('profit with given id not found')
+    this.profitRepository.remove(profit)
   }
 }
