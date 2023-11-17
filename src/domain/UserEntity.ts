@@ -1,5 +1,7 @@
-import { Column, Entity, PrimaryColumn } from 'typeorm'
+import { Column, Entity, OneToMany, PrimaryColumn } from 'typeorm'
 import { UnitEnum } from './UnitEnum'
+import { TransactionEntity } from './TransactionEntity'
+import { ProfitEntity } from './ProfitEntity'
 
 @Entity('user')
 export class UserEntity {
@@ -21,20 +23,26 @@ export class UserEntity {
   @Column({ type: 'char', length: 10, nullable: true, name: 'national_no' })
   nationalNo: number
 
-  @Column({ type: 'float', nullable: true })
+  @Column({ type: 'float', default: 0 })
   financial: number
 
   @Column({
     type: 'enum',
     enum: UnitEnum,
     enumName: 'unit_enum',
-    default: UnitEnum.Rial,
+    default: UnitEnum.Dollar,
   })
   unit: string
 
-  @Column({ type: 'float', nullable: true, name: 'total_profit' })
+  @Column({ type: 'float', name: 'total_profit', default: 0 })
   totalProfit: number
 
   @Column({ default: false, name: 'is_admin' })
   isAdmin: boolean
+
+  @OneToMany(() => TransactionEntity, transaction => transaction.userId)
+  transactions: TransactionEntity[]
+
+  @OneToMany(() => ProfitEntity, profit => profit.userId)
+  profits: ProfitEntity[]
 }

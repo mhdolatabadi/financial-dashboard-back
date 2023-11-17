@@ -7,6 +7,9 @@ export class SubmitProfitDto {
   @IsDateString()
   date: Date
 
+  @IsString()
+  type: string
+
   @IsNumber()
   amount: number
 

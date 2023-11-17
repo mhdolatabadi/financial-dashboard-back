@@ -1,14 +1,16 @@
 import { Injectable, NotFoundException } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { ProfitEntity } from 'src/domain/ProfitEntity'
+import { TransactionTypeEnum } from 'src/domain/TransactionTypeEnum'
 import { UserEntity } from 'src/domain/UserEntity'
 import { SubmitProfitDto } from 'src/model/SubmitProfitDto'
-import { Repository } from 'typeorm'
+import { DataSource, Repository } from 'typeorm'
 import { v4 } from 'uuid'
 
 @Injectable()
 export class ProfitService {
   constructor(
+    private dataSource: DataSource,
     @InjectRepository(ProfitEntity)
     private readonly profitRepository: Repository<ProfitEntity>,
     @InjectRepository(UserEntity)
@@ -16,19 +18,29 @@ export class ProfitService {
   ) {}
 
   async submitProfit(profit: SubmitProfitDto) {
-    const { id: userId } = await this.userRepository.findOne({
-      select: { id: true },
+    const user = await this.userRepository.findOne({
       where: { username: profit.username },
     })
-    const { amount, date, description, unit } = profit
+    const { amount, date, description, unit, type } = profit
     const id = v4()
-    return this.profitRepository.insert({
-      id,
-      amount,
-      date,
-      description,
-      unit,
-      userId,
+    return this.dataSource.transaction(() => {
+      if (type === TransactionTypeEnum.In) {
+        user.financial += amount
+        user.totalProfit += amount
+      } else {
+        user.financial -= amount
+        user.totalProfit -= amount
+      }
+      this.userRepository.save(user)
+      return this.profitRepository.insert({
+        id,
+        amount,
+        date,
+        description,
+        unit,
+        type,
+        userId: user.id,
+      })
     })
   }
 

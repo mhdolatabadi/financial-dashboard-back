@@ -1,6 +1,7 @@
 import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from 'typeorm'
 import { UnitEnum } from './UnitEnum'
 import { UserEntity } from './UserEntity'
+import { TransactionTypeEnum } from './TransactionTypeEnum'
 
 @Entity('profit')
 export class ProfitEntity {
@@ -9,6 +10,9 @@ export class ProfitEntity {
 
   @Column({ type: 'timestamp' })
   date: Date
+
+  @Column({ type: 'enum', enum: TransactionTypeEnum, enumName: 'type', default: TransactionTypeEnum.In })
+  type: string
 
   @Column({ type: 'integer', default: 0 })
   amount: number

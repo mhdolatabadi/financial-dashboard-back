@@ -65,7 +65,14 @@ export class UserService {
 
   getAllUsers() {
     return this.userRepository.find({
-      select: { id: true, username: true, firstname: true, lastname: true },
+      select: {
+        id: true,
+        username: true,
+        firstname: true,
+        lastname: true,
+        unit: true,
+      },
+      where: { isAdmin: false },
     })
   }
 
