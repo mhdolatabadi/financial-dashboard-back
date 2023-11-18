@@ -40,9 +40,9 @@ export class UserEntity {
   @Column({ default: false, name: 'is_admin' })
   isAdmin: boolean
 
-  @OneToMany(() => TransactionEntity, transaction => transaction.userId)
+  @OneToMany(() => TransactionEntity, transaction => transaction.user)
   transactions: TransactionEntity[]
 
-  @OneToMany(() => ProfitEntity, profit => profit.userId)
+  @OneToMany(() => ProfitEntity, profit => profit.user)
   profits: ProfitEntity[]
 }

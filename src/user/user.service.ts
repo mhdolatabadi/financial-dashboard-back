@@ -38,7 +38,10 @@ export class UserService {
   }
 
   async getUserById(id: string) {
-    const user = await this.userRepository.findOne({ where: { id } })
+    const user = await this.userRepository.findOne({
+      where: { id },
+      relations: { transactions: true, profits: true },
+    })
     const transactionDateEntity = await this.transactionRepository.findOne({
       where: { userId: id },
       select: { date: true },
@@ -51,7 +54,10 @@ export class UserService {
   }
 
   async getUserByUsername(username: string) {
-    const user = await this.userRepository.findOne({ where: { username } })
+    const user = await this.userRepository.findOne({
+      where: { username },
+      relations: { transactions: true, profits: true },
+    })
     const transactionDateEntity = await this.transactionRepository.findOne({
       where: { userId: user.id },
       select: { date: true },
