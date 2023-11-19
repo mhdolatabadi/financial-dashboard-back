@@ -10,12 +10,11 @@ import { UserEntity } from './domain/UserEntity'
 import { TransactionEntity } from './domain/TransactionEntity'
 import { TransactionController } from './transaction/transaction.controller'
 import { ProfitController } from './profit/profit.controller'
-import { APP_GUARD } from '@nestjs/core'
-import { AuthGuard } from './auth/auth.guard'
 import { JwtModule } from '@nestjs/jwt'
 import { jwtConstants } from './auth/constants'
 import { AuthService } from './auth/auth.service'
 import { AuthController } from './auth/auth.controller'
+import { getConfig, getOrmConfig } from './app.config'
 
 @Module({
   imports: [
@@ -23,18 +22,13 @@ import { AuthController } from './auth/auth.controller'
       secret: jwtConstants.secret,
       signOptions: { expiresIn: '8h' },
     }),
-    ConfigModule.forRoot(),
-    TypeOrmModule.forRoot({
-      type: 'postgres',
-      host: process.env.DB_HOST,
-      port: +process.env.DB_PORT,
-      password: 'password',
-      username: process.env.DB_USER,
-      entities: [ProfitEntity, UserEntity, TransactionEntity],
-      database: process.env.DB_NAME,
-      synchronize: true,
-      logging: true,
+    ConfigModule.forRoot({
+      envFilePath: ['.env', '.env.default'],
+      load: [getConfig],
+      expandVariables: true,
+      isGlobal: true,
     }),
+    TypeOrmModule.forRoot(getOrmConfig()),
     TypeOrmModule.forFeature([UserEntity, TransactionEntity, ProfitEntity]),
   ],
   controllers: [
