@@ -23,7 +23,7 @@ export class ProfitService {
     })
     const { amount, date, description, unit, type } = profit
     const id = v4()
-    return this.dataSource.transaction(() => {
+    this.dataSource.transaction(() => {
       if (type === TransactionTypeEnum.In) {
         user.financial += amount
         user.totalProfit += amount
@@ -42,6 +42,7 @@ export class ProfitService {
         userId: user.id,
       })
     })
+    return id
   }
 
   getProfits(userId: string) {
@@ -51,6 +52,22 @@ export class ProfitService {
   async deleteProfit(id: string) {
     const profit = await this.profitRepository.findOne({ where: { id } })
     if (!profit) throw new NotFoundException('profit with given id not found')
-    this.profitRepository.remove(profit)
+
+    const user = await this.userRepository.findOne({
+      where: { id: profit.userId },
+    })
+    if (!user) throw new NotFoundException('user not found')
+    user.financial =
+      profit.type === TransactionTypeEnum.In
+        ? user.financial - profit.amount
+        : user.financial + profit.amount
+    user.totalProfit =
+      profit.type === TransactionTypeEnum.In
+        ? user.totalProfit - profit.amount
+        : user.totalProfit + profit.amount
+    return this.dataSource.transaction(() => {
+      this.userRepository.save(user)
+      return this.profitRepository.remove(profit)
+    })
   }
 }
