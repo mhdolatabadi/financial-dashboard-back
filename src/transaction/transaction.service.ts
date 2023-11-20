@@ -24,7 +24,7 @@ export class TransactionService {
     })
     const { amount, date, type, unit, description } = createDto
     const id = v4()
-    return this.dataSource.transaction(() => {
+    this.dataSource.transaction(() => {
       user.financial =
         type === TransactionTypeEnum.In
           ? user.financial + amount
@@ -40,6 +40,7 @@ export class TransactionService {
         userId: user.id,
       })
     })
+    return id
   }
 
   getTransactions(userId: string) {
@@ -52,6 +53,16 @@ export class TransactionService {
     })
     if (!transaction)
       throw new NotFoundException('transaction with given id not found')
-    this.transactionRepository.remove(transaction)
+    
+    const user = await this.userRepository.findOne({
+      where: { id: transaction.userId}
+    })
+    if (!user)
+      throw new NotFoundException('user not found')
+    user.financial = transaction.type === TransactionTypeEnum.In ? user.financial - transaction.amount : user.financial + transaction.amount
+    return this.dataSource.transaction(() => {
+      this.userRepository.save(user)
+      return this.transactionRepository.remove(transaction)
+    })
   }
 }
