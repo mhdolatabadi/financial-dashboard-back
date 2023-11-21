@@ -23,7 +23,6 @@ export class UserService {
     const id = v4()
     const saltRounds = 10
     const hash = await bcrypt.hash(createDto.password, saltRounds)
-
     try {
       await this.userRepository.insert({
         ...createDto,
@@ -31,7 +30,7 @@ export class UserService {
         password: hash,
       })
     } catch (e) {
-      throw new BadRequestException('username is redundant')
+      throw new BadRequestException('username should be unique')
     }
     return id
   }
@@ -41,6 +40,9 @@ export class UserService {
       where: { id },
       relations: { transactions: true, profits: true },
     })
+    if (!user) {
+      throw new NotFoundException('user not found')
+    }
     const transactionDateEntity = await this.transactionRepository.findOne({
       where: { userId: id },
       select: { date: true },
@@ -57,6 +59,9 @@ export class UserService {
       where: { username },
       relations: { transactions: true, profits: true },
     })
+    if (!user) {
+      throw new NotFoundException('user not found')
+    }
     const transactionDateEntity = await this.transactionRepository.findOne({
       where: { userId: user.id },
       select: { date: true },
@@ -83,11 +88,11 @@ export class UserService {
 
   async updateUser(id: string, createDto: Partial<EditUserDto>) {
     const user = await this.getUserById(id)
+    if (!user) {
+      throw new NotFoundException('user not found')
+    }
     const saltRounds = 10
     const hash = await bcrypt.hash(createDto.password, saltRounds)
-    if (!user) {
-      throw new NotFoundException()
-    }
     return this.userRepository.update(id, {
       ...createDto,
       password: createDto.password ? hash : undefined,
@@ -96,6 +101,9 @@ export class UserService {
 
   async deleteUser(id: string) {
     const user = await this.getUserById(id)
+    if (!user) {
+      throw new NotFoundException('user not found')
+    }
     this.userRepository.remove(user)
   }
 }
