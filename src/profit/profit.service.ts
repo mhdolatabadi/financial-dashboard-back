@@ -1,11 +1,10 @@
 import { Injectable, NotFoundException } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
-import { ProfitEntity } from 'src/domain/ProfitEntity'
-import { TransactionTypeEnum } from 'src/domain/TransactionTypeEnum'
-import { UserEntity } from 'src/domain/UserEntity'
-import { SubmitProfitDto } from 'src/model/SubmitProfitDto'
 import { DataSource, Repository } from 'typeorm'
 import { v4 } from 'uuid'
+import { ProfitEntity, UserEntity } from '../domain'
+import { SubmitProfitDto } from '../model'
+import { TransactionTypeEnum } from '../enums'
 
 @Injectable()
 export class ProfitService {

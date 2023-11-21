@@ -1,6 +1,6 @@
 import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common'
 import { ProfitService } from './profit.service'
-import { SubmitProfitDto } from 'src/model/SubmitProfitDto'
+import { SubmitProfitDto } from '../model'
 
 @Controller('profit')
 export class ProfitController {

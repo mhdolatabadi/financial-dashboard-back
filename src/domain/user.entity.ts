@@ -1,7 +1,7 @@
 import { Column, Entity, OneToMany, PrimaryColumn } from 'typeorm'
-import { UnitEnum } from './UnitEnum'
-import { TransactionEntity } from './TransactionEntity'
-import { ProfitEntity } from './ProfitEntity'
+import { UnitEnum } from '../enums/unit.enum'
+import { TransactionEntity } from './transaction.entity'
+import { ProfitEntity } from './profit.entity'
 
 @Entity('user')
 export class UserEntity {

@@ -4,12 +4,11 @@ import {
   NotFoundException,
 } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
-import { UserEntity } from 'src/domain/UserEntity'
-import { CreateUserDto, EditUserDto } from 'src/model/CreateUserDto'
 import { Repository } from 'typeorm'
 import { v4 } from 'uuid'
 import * as bcrypt from 'bcrypt'
-import { TransactionEntity } from 'src/domain/TransactionEntity'
+import { TransactionEntity, UserEntity } from '../domain'
+import { CreateUserDto, EditUserDto } from '../model'
 
 @Injectable()
 export class UserService {

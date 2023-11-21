@@ -1,6 +1,6 @@
 import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common'
 import { TransactionService } from './transaction.service'
-import { SubmitTransactionDto } from 'src/model/SubmitTransactionDto'
+import { SubmitTransactionDto } from '../model'
 
 @Controller('transaction')
 export class TransactionController {
