@@ -7,9 +7,8 @@ import { InjectRepository } from '@nestjs/typeorm'
 import { Repository } from 'typeorm'
 import { v4 } from 'uuid'
 import * as bcrypt from 'bcrypt'
-import { UserEntity } from 'src/domain/UserEntity'
-import { CreateUserDto, EditUserDto } from 'src/model/CreateUserDto'
-import { TransactionEntity } from 'src/domain/TransactionEntity'
+import { TransactionEntity, UserEntity } from '../domain'
+import { CreateUserDto, EditUserDto } from '../model'
 
 @Injectable()
 export class UserService {

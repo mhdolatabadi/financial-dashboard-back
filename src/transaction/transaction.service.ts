@@ -1,11 +1,10 @@
 import { Injectable, NotFoundException } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
-import { TransactionEntity } from 'src/domain/TransactionEntity'
-import { TransactionTypeEnum } from 'src/domain/TransactionTypeEnum'
-import { UserEntity } from 'src/domain/UserEntity'
-import { SubmitTransactionDto } from 'src/model/SubmitTransactionDto'
+import { TransactionEntity, UserEntity } from '../domain'
 import { DataSource, Repository } from 'typeorm'
 import { v4 } from 'uuid'
+import { SubmitTransactionDto } from '../model'
+import { TransactionTypeEnum } from '../enums'
 
 @Injectable()
 export class TransactionService {

@@ -6,9 +6,9 @@ import {
   ManyToOne,
   PrimaryColumn,
 } from 'typeorm'
-import { TransactionTypeEnum } from './TransactionTypeEnum'
-import { UnitEnum } from './UnitEnum'
-import { UserEntity } from './UserEntity'
+import { TransactionTypeEnum } from '../enums/transactionType.enum'
+import { UnitEnum } from '../enums/unit.enum'
+import { UserEntity } from './user.entity'
 
 @Entity('transaction')
 export class TransactionEntity {
