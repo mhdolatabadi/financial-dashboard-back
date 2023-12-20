@@ -1,18 +1,8 @@
+import { useState } from 'react'
+import { useDispatch } from 'react-redux'
+import { useTranslation } from 'react-i18next'
 import { TabContext, TabList, TabPanel } from '@mui/lab'
 import { styled, Tab } from '@mui/material'
-import { CreateUser } from './CreateUser'
-import { AllUsersTable } from './AllUsersTable'
-import { SubmitTransaction } from './SubmitTransaction'
-import { SubmitProfit } from './SubmitProfit'
-import { useState } from 'react'
-import {
-  createUser,
-  getUserWithUsername,
-} from '../../settings/api/dataManipulation'
-import { ErrorToast, SectionWithHeader, SuccessToast } from '../common'
-import { Credential } from '../../models/Credential'
-import { useDispatch } from 'react-redux'
-import { setAddUser } from '../../pages/user/main.slice'
 import {
   AdminPanelSettings,
   Group,
@@ -20,7 +10,18 @@ import {
   PersonAdd,
   Receipt,
 } from '@mui/icons-material'
-import { useTranslation } from 'react-i18next'
+import { CreateUser } from './CreateUser'
+import { AllUsersTable } from './AllUsersTable'
+import { SubmitTransaction } from './SubmitTransaction'
+import { SubmitProfit } from './SubmitProfit'
+import {
+  createUser,
+  getUserWithUsername,
+} from '../../settings/api/dataManipulation'
+import { SectionWithHeader } from '../common'
+import { Credential } from '../../models/credential'
+import { setAddUser } from '../../pages/user/main.slice'
+import { errorToast, successToast } from '../../utils/toast'
 
 const StyledTabPanel = styled(TabPanel)(() => ({
   width: '100%',
@@ -53,7 +54,9 @@ interface Props {
 
 export function AdminToolbox({ editMode }: Props) {
   const { t } = useTranslation()
+
   const dispatch = useDispatch()
+
   const [selectedTab, setSelectedTab] = useState<string>('1')
 
   const handleCreateUser = ({
@@ -62,13 +65,13 @@ export function AdminToolbox({ editMode }: Props) {
     unit,
   }: Credential & { unit: string }) => {
     createUser(username, password, unit).then(() => {
-      SuccessToast(t('messages.successful'))
+      successToast(t('messages.successful'))
       getUserWithUsername(username)
         .then((res) => {
           dispatch(setAddUser(res.data))
         })
         .catch(() => {
-          ErrorToast('مشکلی پیش آمد')
+          errorToast(t('messages.error'))
         })
     })
   }
@@ -82,7 +85,7 @@ export function AdminToolbox({ editMode }: Props) {
     >
       <SectionWithHeader
         sx={{ maxWidth: '500px' }}
-        header="مدیریت اطلاعات کاربران"
+        header={t('userManagement')}
         Icon={<AdminPanelSettings color="primary" />}
       >
         <TabContext value={selectedTab}>

@@ -3,19 +3,14 @@ import { UsernameSelect } from '../common/UsernameSelect'
 import { AmountUnitTextField } from '../common/AmountUnitTextField'
 import { submitProfit } from '../../settings/api/dataManipulation'
 import moment from 'moment-jalaali'
-import {
-  ContainedButton,
-  DatePicker,
-  ErrorToast,
-  SuccessToast,
-  TextField,
-} from '../common'
+import { ContainedButton, DatePicker, TextField, } from '../common'
 import { useDispatch, useSelector } from 'react-redux'
 import { usersView } from '../../pages/user/main.slice'
 import { Units } from '../../models/units'
 import { FormControlLabel, Radio, RadioGroup } from '@mui/material'
 import { useTranslation } from 'react-i18next'
 import { addSelectedProfit } from '../../pages/user/selected-user.slice'
+import { errorToast, successToast } from '../../utils/toast'
 
 export function SubmitProfit() {
   const { t } = useTranslation()
@@ -32,7 +27,7 @@ export function SubmitProfit() {
 
   const handleSubmitTransaction = () => {
     if (amount === 0) {
-      ErrorToast('مبلغ نمی‌تواند صفر باشد')
+      errorToast(t('messages.nonZeroAmount'))
       return
     }
     const profit = {
@@ -46,10 +41,10 @@ export function SubmitProfit() {
     submitProfit(profit)
       .then((res) => {
         dispatch(addSelectedProfit({ id: res.data, ...profit, username: undefined, date: profit.date.toLocaleDateString() }))
-        SuccessToast(t('messages.successful'))
+        successToast(t('messages.successful'))
       })
       .catch(() => {
-        ErrorToast('مشکلی پیش آمد')
+        errorToast(t('messages.error'))
       })
   }
   return (
@@ -87,8 +82,8 @@ export function SubmitProfit() {
           onChange={(e) => setType(e.target.value)}
           sx={{ padding: '10px' }}
         >
-          <FormControlLabel value="in" control={<Radio />} label="سود" />
-          <FormControlLabel value="out" control={<Radio />} label="زیان" />
+          <FormControlLabel value="in" control={<Radio />} label={t('profig')} />
+          <FormControlLabel value="out" control={<Radio />} label={t('detriment')} />
         </RadioGroup>
         <TextField
           multiline

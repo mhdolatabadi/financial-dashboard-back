@@ -1,22 +1,13 @@
+import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { ErrorToast, SuccessToast, TextField } from '../common'
-import {
-  selectedUserView,
-  setSelectedFinancial,
-  setSelectedFirstname,
-  setSelectedLastname,
-  setSelectedNationalNo,
-  setSelectedPassword,
-  setSelectedUnit,
-  setSelectedUser,
-  setSelectedUsername,
-} from '../../pages/user/selected-user.slice'
+import { useTranslation } from 'react-i18next'
 import { Button, MenuItem } from '@mui/material'
+import { TextField } from '../common'
+import { selectedUserView, setSelectedUser, } from '../../pages/user/selected-user.slice'
 import { updateUserInformation } from '../../settings/api/dataManipulation'
 import { Units } from '../../models/units'
-import React, { useState } from 'react'
-import { useTranslation } from 'react-i18next'
 import { usersView } from '../../pages/user/main.slice'
+import { errorToast, successToast } from '../../utils/toast'
 
 interface Props {
   handleClose: (state: boolean) => unknown
@@ -53,10 +44,10 @@ export function UserInformationForm({ handleClose }: Props) {
       .then((res) => {
         console.log(res)
         dispatch(setSelectedUser(user))
-        SuccessToast(t('messages.successful'))
+        successToast(t('messages.successful'))
       })
       .catch(() => {
-        ErrorToast('مشکلی پیش آمد')
+        errorToast(t('messages.error'))
       })
       .finally(() => handleClose(false))
   }
@@ -81,7 +72,7 @@ export function UserInformationForm({ handleClose }: Props) {
           helperText={
             users.map((u) => u.username).includes(username) &&
             username !== selectedUser.username
-              ? 'نام کاربری باید یکتا باشد'
+              ? t('inform.usernameMustBeUnique')
               : ''
           }
           onChange={(username) => setUsername(username.target.value)}
@@ -110,7 +101,7 @@ export function UserInformationForm({ handleClose }: Props) {
 
         <TextField
           select
-          label="واحد تراکنش‌های کاربر"
+          label={t('userTransactionsUnit')}
           value={unit}
           onChange={(e) => setUnit(e.target.value)}
         >

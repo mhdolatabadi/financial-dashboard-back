@@ -1,12 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { RootState } from '../../settings/store'
 import { User } from '../../models/user'
-import { Page } from '../../models/Page'
+import { Page } from '../../models/page.enum'
 
 const mainSlice = createSlice({
   name: 'main',
   initialState: {
-    currentPage: localStorage.getItem('accessToken') ? Page.admin : Page.login,
+    currentPage: localStorage.getItem('accessToken') ? Page.Main : Page.Login,
     accessToken: localStorage.getItem('accessToken'),
     selectedUser: null as unknown as User,
     users: [] as User[],

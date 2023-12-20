@@ -1,41 +1,43 @@
 import { useState } from 'react'
 import {
   ContainedButton,
-  ErrorToast,
   Section,
-  SuccessToast,
   TextField,
 } from '../../components/common'
 import { loginUser } from '../../settings/api/dataManipulation'
 import { useDispatch } from 'react-redux'
 import { setAccessToken, setCurrentPage } from '../user/main.slice'
-import { Page } from '../../models/Page'
+import { Page } from '../../models/page.enum'
 import {
   setCurrentIsAdmin,
   setCurrentUsername,
 } from '../user/current-user.slice'
 import { setSelectedUsername } from '../user/selected-user.slice'
 import { useTranslation } from 'react-i18next'
+import { errorToast, successToast } from '../../utils/toast'
 
 export function LoginPage() {
   const { t } = useTranslation()
+
   const [username, setUsernameState] = useState<string>('')
   const [password, setPassword] = useState<string>('')
+
   const dispatch = useDispatch()
+
   const loginHandler = () => {
     loginUser(username, password)
       .then(({ data }) => {
         localStorage.setItem('username', username)
         localStorage.setItem('accessToken', data.access_token)
-        dispatch(setCurrentPage(Page.admin))
+        dispatch(setCurrentPage(Page.Main))
         dispatch(setAccessToken(data.access_token))
         dispatch(setCurrentIsAdmin(data.isAdmin))
         dispatch(setSelectedUsername(username))
         dispatch(setCurrentUsername(username))
-        SuccessToast(t('messages.successfulLogin'))
+        successToast(t('messages.successfulLogin'))
       })
       .catch(() => {
-        ErrorToast('مشکلی پیش آمد')
+        errorToast(t('messages.error'))
       })
   }
 

@@ -14,7 +14,6 @@ import {
   getUserTransactions,
   getUserWithId,
 } from '../../settings/api/dataManipulation'
-import { ErrorToast, SuccessToast } from '../common'
 import { useDispatch, useSelector } from 'react-redux'
 import {
   setSelectedProfits,
@@ -24,6 +23,7 @@ import {
 import { setDeleteUser, usersView } from '../../pages/user/main.slice'
 import { currentUsernameView } from '../../pages/user/current-user.slice'
 import { useTranslation } from 'react-i18next'
+import { errorToast, successToast } from '../../utils/toast'
 
 interface Props {
   editMode: boolean
@@ -49,10 +49,10 @@ export function AllUsersTable({ editMode }: Props) {
     deleteUser(id)
       .then(() => {
         dispatch(setDeleteUser(id))
-        SuccessToast(t('messages.successful'))
+        successToast(t('messages.successful'))
       })
       .catch(() => {
-        ErrorToast('مشکلی پیش آمد')
+        errorToast(t('messages.error'))
       })
   }
   return (

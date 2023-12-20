@@ -1,4 +1,7 @@
 import { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { useTranslation } from 'react-i18next'
+import { Typography } from '@mui/material'
 import {
   getAllUsers,
   getUserProfits,
@@ -6,7 +9,6 @@ import {
   getUserWithUsername,
 } from '../../settings/api/dataManipulation'
 import { AdminToolbox } from '../../components/admin'
-import { useDispatch, useSelector } from 'react-redux'
 import {
   currentIsAdminView,
   currentUsernameView,
@@ -20,9 +22,7 @@ import {
   setSelectedTransactions,
   setSelectedUser,
 } from './selected-user.slice'
-import { Typography } from '@mui/material'
 import { setUsers } from './main.slice'
-import { useTranslation } from 'react-i18next'
 import { toPersianNumber } from '../../utils/toPersianNumber'
 import { UserInformationContainer } from '../../components/user-information'
 import { ProfitsTable, TransactionsTable } from '../../components/table'
@@ -62,11 +62,9 @@ export function MainPage() {
   return (
     <div style={{ padding: '130px 0 0', height: '100%', width: '100%' }}>
       <div style={{ padding: '50px' }}>
-        <Typography
-          color="white"
-          fontWeight="700"
-          fontSize="25px"
-        >{`دارایی شما: ${toPersianNumber(currentUser.financial)} ${t(
+        <Typography color="white" fontWeight="700" fontSize="25px">{`${t(
+          'yourFinance',
+        )} ${toPersianNumber(currentUser.financial)} ${t(
           `units.${currentUser.unit}`,
         )}`}</Typography>
       </div>

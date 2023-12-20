@@ -5,6 +5,7 @@ i18n.use(initReactI18next).init({
   resources: {
     fa: {
       translation: {
+        title: 'صندوق سرمایه‌گذاری خصوصی درنیکو',
         common: {
           amount: 'مبلغ',
           cancel: 'انصراف',
@@ -14,10 +15,13 @@ i18n.use(initReactI18next).init({
           description: 'توضیحات',
           edit: 'ویرایش',
           enter: 'ورود',
+          exit: 'خروج',
           optional: 'اختیاری',
           submit: 'ثبت',
           unit: 'واحد',
           withdraw: 'برداشت',
+          profit: 'سود',
+          detriment: 'زیان'
         },
         units: {
           rial: 'ریال',
@@ -34,25 +38,32 @@ i18n.use(initReactI18next).init({
         },
         lastTransactionDate: 'تاریخ آخرین تراکنش',
         financial: 'دارایی فعلی در صندوق',
+        yourFinance: 'دارایی شما:',
         totalProfit: 'مجموع سود دریافتی',
         createNewUser: 'ساخت کاربر جدید',
         userInformation: 'اطلاعات کاربر',
         usersList: 'فهرست کاربران',
         submitTransaction: 'ثبت تراکنش مالی',
         submitProfit: 'ثبت سود',
+        userManagement: 'مدیریت اطلاعات کاربران',
         transactionType: 'نوع (واریز یا برداشت)',
+        userTransactionsUnit: 'واحد تراکنش‌های کاربر',
         profitTable: 'جدول سودها',
         transactionTable: 'جدول تراکنش‌ها',
         messages: {
           wrongCredential: 'نام کاربری یا رمز عبور اشتباه است',
           successfulLogin: 'با موفقیت وارد شدید',
           successful: 'با موفقیت ثبت شد',
+          error: 'مشکلی پیش آمد',
+          nonZeroAmount: 'مبلغ نمی‌تواند صفر باشد',
+          successfulLogout: 'با موفقیت از حساب کابری خارج شدید'
         },
         inform: {
           thereIsNoUserYet: 'هنوز کاربری ساخته نشده است',
           thereIsNoTransactionYet: 'تراکنشی ثبت نشده است',
           thereIsNotProfitYet: 'سودی ثبت نشده است',
           empty: 'وارد نشده',
+          usernameMustBeUnique: 'نام کاربری باید یکتا باشد'
         },
       },
     },

@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { ContainedButton, TextField } from '../common'
-import { Credential } from '../../models/Credential'
+import { Credential } from '../../models/credential'
 import { MenuItem } from '@mui/material'
 import { Units } from '../../models/units'
 import { useTranslation } from 'react-i18next'
@@ -24,6 +24,12 @@ export function CreateUser({ handleCreateUser }: Props) {
   const [password, setPassword] = useState('')
   const [unit, setUnit] = useState<string>(Units.dollar)
 
+  const handleSubmit = () => {
+    setUsername('')
+    setPassword('')
+    handleCreateUser({ username, password, unit })
+  }
+
   return (
     <form
       style={{
@@ -39,8 +45,12 @@ export function CreateUser({ handleCreateUser }: Props) {
         <TextField
           label={t('user.username')}
           value={username}
-          error={users.map(u => u.username).includes(username)}
-          helperText={users.map(u => u.username).includes(username) ? 'نام کاربری باید یکتا باشد' : ''} 
+          error={users.map((u) => u.username).includes(username)}
+          helperText={
+            users.map((u) => u.username).includes(username)
+              ? t('inform.usernameMustBeUnique')
+              : ''
+          }
           onChange={(e) => setUsername(e.target.value)}
         />
         <TextField
@@ -50,7 +60,7 @@ export function CreateUser({ handleCreateUser }: Props) {
         />
         <TextField
           select
-          label="واحد تراکنش‌های کاربر"
+          label={t('userTransactionsUnit')}
           value={unit}
           onChange={(e) => setUnit(e.target.value)}
         >
@@ -60,9 +70,7 @@ export function CreateUser({ handleCreateUser }: Props) {
           <MenuItem value={Units.euro}>{t('units.euro')}</MenuItem>
         </TextField>
       </div>
-      <ContainedButton
-        onClick={() => handleCreateUser({ username, password, unit })}
-      >
+      <ContainedButton onClick={handleSubmit}>
         {t('common.create')}
       </ContainedButton>
     </form>

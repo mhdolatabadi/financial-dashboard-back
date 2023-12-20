@@ -1,4 +1,4 @@
-import { ErrorToast, SectionWithHeader, Table } from '../common'
+import { SectionWithHeader, Table } from '../common'
 import { useDispatch, useSelector } from 'react-redux'
 import {
   selectedUserTransactionsView,
@@ -7,6 +7,7 @@ import {
 import { ReceiptLong } from '@mui/icons-material'
 import { deleteTransaction } from '../../settings/api/dataManipulation'
 import { useTranslation } from 'react-i18next'
+import { errorToast } from '../../utils/toast'
 
 export function TransactionsTable() {
   const { t } = useTranslation()
@@ -18,7 +19,7 @@ export function TransactionsTable() {
         dispatch(setDeleteTransaction(id))
       })
       .catch(() => {
-        ErrorToast('مشکلی پیش آمد')
+        errorToast(t('messages.error'))
       })
   }
   return (
