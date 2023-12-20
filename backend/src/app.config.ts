@@ -1,7 +1,5 @@
 import { DataSourceOptions } from 'typeorm'
-import { UserEntity } from './domain/UserEntity'
-import { TransactionEntity } from './domain/TransactionEntity'
-import { ProfitEntity } from './domain/ProfitEntity'
+import { ProfitEntity, TransactionEntity, UserEntity } from './domain'
 
 export interface ServerConfig {
   port: number
@@ -28,7 +26,7 @@ export const getOrmConfig = (): DataSourceOptions => ({
   database: process.env.DB_NAME,
   synchronize: Boolean(process.env.DB_SYNC),
   entities: [UserEntity, TransactionEntity, ProfitEntity],
-  logging: false,
+  logging: true,
   // migrationsRun: !Boolean(process.env.DB_SYNC),
   // migrations: [join(__dirname, '..', 'migrations', '*.{js,ts}')],
 })
